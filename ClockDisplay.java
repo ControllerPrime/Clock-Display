@@ -47,12 +47,18 @@ public class ClockDisplay
      */
     public void timeTick()
     {
+        updateDisplay();
         minutes.increment();
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
         }
         updateDisplay();
     }
+    
+   /* public String display12H(int hour, int minute)
+   {if(hour > 12)
+        hour = hour - 12;
+    }*/
 
     /**
      * Set the time of the display to the specified hour and
@@ -62,7 +68,7 @@ public class ClockDisplay
     {
         hours.setValue(hour);
         minutes.setValue(minute);
-        updateDisplay();
+    /*    updateDisplay(); */
     }
 
     /**
@@ -70,6 +76,13 @@ public class ClockDisplay
      */
     public String getTime()
     {
+        updateDisplay();
+        return displayString;
+    }
+    
+    public String getTime12()
+    {
+        updateDisplay12();
         return displayString;
     }
     
@@ -80,5 +93,25 @@ public class ClockDisplay
     {
         displayString = hours.getDisplayValue() + ":" + 
                         minutes.getDisplayValue();
+    }
+    
+    private void updateDisplay12()
+    {
+       int hr;
+       String ampm = "";
+       
+       hr = hours.getValue();
+       
+       if (hr < 12)
+       {ampm = "am";}
+       if (hr >= 12)
+       {ampm = "pm";}
+       if (hr > 12)
+       {hr = hr -12;}
+       
+       
+           
+       
+       displayString = hr + ":" + minutes.getDisplayValue() + " " + ampm;
     }
 }
